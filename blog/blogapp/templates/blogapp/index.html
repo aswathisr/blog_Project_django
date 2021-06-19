@@ -1,0 +1,40 @@
+{% extends 'blogapp/base.html' %}
+{% block content %}
+
+<!-- Blog Entries Column -->
+      <div class="col-md-8">
+      {% for post in blog_posts %}
+        <!-- Blog Post -->
+        <div class="card mb-4 mt-4">
+          <div class="card-body">
+            <h2 class="card-title">{{post.title}}</h2>
+            <p class="card-text"> {{post.text}}</p>
+            <a href="{% url 'entry_detail' post.pk %}" class="btn btn-primary btn-sm">More Options</a>
+          </div>
+          <div class="card-footer text-muted">
+            Posted on {{post.date}} by
+            <span class= "text-info mr-2">{{post.author}}</span>
+          </div>
+        </div>
+      {% endfor %}
+
+          {% if is_paginated %}
+        <!-- Pagination -->
+
+        <ul class="pagination justify-content-center mb-4">
+            {% if page_obj.has_previous %}
+
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.previous_page_number}}">&larr; Previous Page</a>
+          </li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.next_page_number}}">Next Page &rarr;</a>
+          </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+      </div>
+{% endblock %}
